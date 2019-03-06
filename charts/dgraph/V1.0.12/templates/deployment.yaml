@@ -71,7 +71,7 @@ spec:
             set -ex
             {{ .Values.DgraphZero.command }}{{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphZero_port }}
 
-      - name: Alpha
+      - name: alpha
         image: "dgraph/dgraph:{{ .Values.config.useTagVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         resources: {}
@@ -93,9 +93,9 @@ spec:
         ports:
         - containerPort: {{ .Values.config.DgraphAlpha_port_http }}
           hostPort: {{ .Values.config.DgraphAlpha_port_http }}
-          name: Alpha-http
+          name: alpha-http
         - containerPort: {{ .Values.config.DgraphAlpha_port }}
-          name: Alpha-grpc
+          name: alpha-grpc
         volumeMounts:
         - name: datadir
           mountPath: /dgraph
