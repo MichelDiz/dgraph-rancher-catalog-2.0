@@ -16,9 +16,9 @@ image:
 DgraphSeparator: ":"
 DgraphMemory: "--lru_mb"
 
-DgraphServer:
+DgraphAlpha:
   enabled: true
-  command: "dgraph server --my="
+  command: "dgraph Alpha --my="
   commandtoZero: "--zero"
 
 DgraphZero:

@@ -1,6 +1,6 @@
 name: dgraph
-version: 0.0.1
-appVersion: 1.0.5
+version: 0.0.2
+appVersion: 1.0.12
 description: Not everything can fit in rows and columns. Meet Dgraph, world's most advanced graph database.
 home: https://dgraph.io/
 icon: https://dgraph.io/assets/images/logo.png

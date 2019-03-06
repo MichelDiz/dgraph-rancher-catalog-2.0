@@ -16,12 +16,12 @@ spec:
   - port: {{ .Values.config.DgraphZero_port_http }}
     targetPort: {{ .Values.config.DgraphZero_port_http }}
     name: zero-http
-  - port: {{ .Values.config.DgraphServer_port_http }}
-    targetPort: {{ .Values.config.DgraphServer_port_http }}
-    name: server-http
-  - port: {{ .Values.config.DgraphServer_port }}
-    targetPort: {{ .Values.config.DgraphServer_port }}
-    name: server-grpc
+  - port: {{ .Values.config.DgraphAlpha_port_http }}
+    targetPort: {{ .Values.config.DgraphAlpha_port_http }}
+    name: Alpha-http
+  - port: {{ .Values.config.DgraphAlpha_port }}
+    targetPort: {{ .Values.config.DgraphAlpha_port }}
+    name: Alpha-grpc
   - port: {{ .Values.config.DgraphRatel_port }}
     targetPort: {{ .Values.config.DgraphRatel_port }}
     name: ratel-http

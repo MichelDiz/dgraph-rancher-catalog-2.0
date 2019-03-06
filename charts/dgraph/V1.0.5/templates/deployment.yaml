@@ -71,7 +71,7 @@ spec:
             set -ex
             {{ .Values.DgraphZero.command }}{{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphZero_port }}
 
-      - name: server
+      - name: Alpha
         image: "dgraph/dgraph:{{ .Values.config.useTagVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         resources: {}
@@ -88,14 +88,14 @@ spec:
           - "-c"
           - |
             set -ex
-            {{ .Values.DgraphServer.command }}{{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphServer_port_grpc_internal }} {{ .Values.DgraphMemory }} {{ .Values.config.DgraphServer_memory }} {{ .Values.DgraphServer.commandtoZero }} {{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphZero_port }}
-           # dgraph server --my=                      0.0.0.0                               :                              7080                              --lru_mb               2048                                      --zero                                       0.0.0.0                                  :                             5080
+            {{ .Values.DgraphAlpha.command }}{{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphAlpha_port_grpc_internal }} {{ .Values.DgraphMemory }} {{ .Values.config.DgraphAlpha_memory }} {{ .Values.DgraphAlpha.commandtoZero }} {{ .Values.config.DefaultHostName }}{{ .Values.DgraphSeparator }}{{ .Values.config.DgraphZero_port }}
+           # dgraph Alpha --my=                      localhost                               :                              7080                                      --lru_mb                      2048                                      --zero                                    localhost                            :                             5080
         ports:
-        - containerPort: {{ .Values.config.DgraphServer_port_http }}
-          hostPort: {{ .Values.config.DgraphServer_port_http }}
-          name: server-http
-        - containerPort: {{ .Values.config.DgraphServer_port }}
-          name: server-grpc
+        - containerPort: {{ .Values.config.DgraphAlpha_port_http }}
+          hostPort: {{ .Values.config.DgraphAlpha_port_http }}
+          name: Alpha-http
+        - containerPort: {{ .Values.config.DgraphAlpha_port }}
+          name: Alpha-grpc
         volumeMounts:
         - name: datadir
           mountPath: /dgraph

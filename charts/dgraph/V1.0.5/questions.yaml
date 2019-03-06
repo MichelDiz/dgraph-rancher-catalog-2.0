@@ -14,15 +14,15 @@ questions:
     default: "latest"
     description: "Use a Dgraph container tag version of your preference - see more https://hub.docker.com/r/dgraph/dgraph/tags/"
     type: string
-    label: Choose a version Like "v1.0.5" or "dev"
+    label: Choose a version Like "v1.0.12" or "v1.0.12-rc7"
 
 - variable: config.DefaultHostName
   description: "Default HostName"
-  default: "0.0.0.0"
+  default: "localhost"
   type: string
-- variable: config.DgraphServer_memory
-  description: "Defines the amount of memory Dgraph Server. Set an average of at least half of the available memory."
-  default: 2048
+- variable: config.DgraphAlpha_memory
+  description: "Defines the amount of memory Dgraph Alpha. Set an average of at least half of the available memory."
+  default: 16384
   type: int
 
 - variable: editConfigOf.Zero
@@ -43,25 +43,25 @@ questions:
     default: 6080
     type: int
 
-- variable: editConfigOf.Server
+- variable: editConfigOf.Alpha
   default: "false"
   description: "You can edit all Dgraph's config, but what you change here affects all."
-  label: Edit Config Of Dgraph Server
+  label: Edit Config Of Dgraph Alpha
   type: boolean
   show_subquestion_if: true
   required: true
-  group: "Server"
+  group: "Alpha"
   subquestions:
-  - variable: config.DgraphServer_port
-    description: "Defines Dgraph's Server gRPC-external Port."
-    default: 9090
+  - variable: config.DgraphAlpha_port
+    description: "Defines Dgraph's Alpha gRPC-external Port."
+    default: 9080
     type: int
-  - variable: config.DgraphServer_port_grpc_internal
-    description: "Defines Dgraph's Server gRPC-internal Port."
+  - variable: config.DgraphAlpha_port_grpc_internal
+    description: "Defines Dgraph's Alpha gRPC-internal Port."
     default: 7080
     type: int
-  - variable: config.DgraphServer_port_http
-    description: "Defines Dgraph's Server http-external Port."
+  - variable: config.DgraphAlpha_port_http
+    description: "Defines Dgraph's Alpha http-external Port."
     default: 8080
     type: int
 
@@ -76,6 +76,6 @@ questions:
   group: "Ratel"
   subquestions:
   - variable: config.DgraphRatel_port
-    description: "Defines Dgraph's Ratel HTTP Port. ATTENTION: Don't edit Ratel port for now. It's here for future usages and let you know."
+    description: "Defines Dgraph's UI HTTP Port. ATTENTION: Don't edit Ratel port for now. It's here for future usages and let you know."
     default: 8000
     type: int
