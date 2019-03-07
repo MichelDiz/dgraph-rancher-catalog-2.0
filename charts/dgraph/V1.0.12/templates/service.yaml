@@ -11,6 +11,17 @@ metadata:
 spec:
   type: ClusterIP
   clusterIP: {{ .Values.service.clusterIP.ip | default "" }}
+{{- if contains "LoadBalancer" .Values.service.type }}
+  {{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end -}}
+  {{- if .Values.service.loadBalancerSourceRanges}}
+  loadBalancerSourceRanges:
+  {{- range .Values.service.loadBalancerSourceRanges }}
+  - {{ . }}
+  {{- end }}
+  {{- end -}}
+{{- end -}}
   ports:
   - port: {{ .Values.config.DgraphZero_port }}
     targetPort: {{ .Values.config.DgraphZero_port }}
@@ -32,6 +43,9 @@ spec:
     targetPort: {{ .Values.config.DgraphRatel_port }}
     name: ratel-http
     protocol: TCP
+    {{- if .Values.service.nodePort }}
+    nodePort:  {{ .Values.service.nodePort }}
+    {{- end }}
   selector:
     app: {{ template "Dgraph.fullname" . }}
 {{- end }}

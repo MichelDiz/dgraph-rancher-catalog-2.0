@@ -1,8 +1,11 @@
+#Todo
+# Add ACL + Add metrics or try to run Grafana Stack in same context
+
 ## Dgraph image version
 ## ref: https://hub.docker.com/r/dgraph/dgraph/
 image:
   repository: dgraph/dgraph
-  tag: "latest"
+  tag: "V1.0.12"
   pullPolicy: IfNotPresent
   ## Specify ImagePullSecrets for Pods
   ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
