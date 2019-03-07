@@ -1,0 +1,22 @@
+{{- if .Values.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "Dgraph.fullname" . }}
+  labels:
+    app: {{ template "Dgraph.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}Gi
+{{- if (.Values.persistence.labels) }}
+  selector:
+    matchLabels:
+{{ toYaml .Values.persistence.labels | indent 6 }}
+{{- end }}
+{{- end }}

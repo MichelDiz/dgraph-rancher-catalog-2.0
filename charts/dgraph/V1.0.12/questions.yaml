@@ -79,3 +79,59 @@ questions:
     description: "Defines Dgraph's UI HTTP Port. ATTENTION: Don't edit Ratel port for now. It's here for future usages and let you know."
     default: 8000
     type: int
+
+- variable: persistence.enabled
+  default: true
+  description: "Enable persistent volume for Dgraph"
+  type: boolean
+  label: Dgraph Persistent Volume Enabled
+  show_subquestion_if: true
+  group: "Persistence"
+  subquestions:
+  - variable: persistence.size
+    default: "16Gi"
+    description: "true Persistent Volume Size"
+    type: string
+    label: true Volume Size
+
+- variable: service.ingress.enabled
+  default: "true"
+  description: "Expose Dgraph using Layer 7 Load Balancer - ingress"
+  type: boolean
+  label: Expose app using Layer 7 Load Balancer
+  show_subquestion_if: true
+  group: "Ingress"
+  subquestions:
+  - variable: service.ingress.host
+    default: "xip.io"
+    description: "Hostname to your Dgraph installation"
+    type: hostname
+    required: true
+    label: Hostname
+
+- variable: service.ingress.clusterIP
+  default: "true"
+  description: "Expose Dgraph using a ClusterIP Service"
+  type: boolean
+  label: Expose app using a Cluster IP Service
+  show_subquestion_if: true
+  group: "Cluster IP"
+  subquestions:
+  - variable: service.clusterIP.ip
+    description: "(Optional) Desired Cluster IP"
+    type: string
+    label: Desired Cluster IP
+
+- variable: service.loadBalancer.enabled
+  default: "false"
+  description: "Expose Dgraph using Layer 4 Load Balancer"
+  type: boolean
+  label: Expose app using Layer 4 Load Balancer
+  group: "Services"
+
+- variable: service.nodePort.enabled
+  default: "false"
+  description: "Expose Dgraph using a NodePort"
+  type: boolean
+  label: Expose app using a NodePort
+  group: "Services"

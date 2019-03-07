@@ -1,16 +1,15 @@
-{{- if or (.Values.service.ingress.enabled) (.Values.service.clusterIP.enabled) }}
+{{- if (.Values.service.loadBalancer.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "Dgraph.fullname" . }}
+  name: {{ template "Dgraph.fullname" . }}-lb
   labels:
     app: {{ template "Dgraph.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
 spec:
-  type: ClusterIP
-  clusterIP: {{ .Values.service.clusterIP.ip | default "" }}
+  type: LoadBalancer
   ports:
   - port: {{ .Values.config.DgraphZero_port }}
     targetPort: {{ .Values.config.DgraphZero_port }}
@@ -34,4 +33,6 @@ spec:
     protocol: TCP
   selector:
     app: {{ template "Dgraph.fullname" . }}
+status:
+  loadBalancer: {}
 {{- end }}

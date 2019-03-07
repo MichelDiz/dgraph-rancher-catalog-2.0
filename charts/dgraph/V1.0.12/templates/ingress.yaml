@@ -1,3 +1,4 @@
+{{- if .Values.service.ingress.enabled }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -9,10 +10,15 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 spec:
   rules:
-  - host: localhost
+  - host: {{ .Values.service.ingress.host }}
     http:
       paths:
-        - path:
+        - path: /
           backend:
             serviceName: {{ template "Dgraph.fullname" . }}
             servicePort: {{ .Values.config.DgraphRatel_port }}
+#   tls:
+#   - hosts:
+#     - {{ .Values.service.ingress.host }}
+# ---
+{{- end }}

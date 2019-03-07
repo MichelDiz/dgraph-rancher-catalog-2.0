@@ -12,6 +12,17 @@ image:
 ## ref: http://kubernetes.io/docs/user-guide/services/
 # service:
 #   type: ClusterIP
+service:
+  loadBalancer:
+    enabled: false
+  clusterIP:
+    enabled: false
+    #ip:
+  nodePort:
+    enabled: false
+  ingress:
+    enabled: false
+    host: dgraph.default.svc
 
 DgraphSeparator: ":"
 DgraphMemory: "--lru_mb"
@@ -39,25 +50,29 @@ Ratel:
 ##
 persistence:
   enabled: true
-  accessMode: ReadWriteOnce
-  size: 5Gi
+  storageClass: default
+  ## The location within the Dgraph container
+  ## store its posting list and wall logs.
+  ##
+  mountPath: "/dgraph"
+  bindHostEnabled: false
 
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer or ClusterIP
 ##
-serviceType: LoadBalancer
+#serviceType: LoadBalancer
 ##
 ## serviceType: NodePort
 ## nodePorts:
 ##   http: <to set explicitly, choose port between 30000-32767>
 ##   https: <to set explicitly, choose port between 30000-32767>
-nodePorts:
-  http: ""
-  https: ""
+# nodePorts:
+#   http: ""
+#   https: ""
 ## Enable client source IP preservation
 ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
 ##
-serviceExternalTrafficPolicy: Local
+# serviceExternalTrafficPolicy: Local
 
 ## Allow health checks to be pointed at the https port
 healthcheckHttps: false
@@ -66,13 +81,12 @@ healthcheckHttps: false
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ## Minimum memory for development is 4GB and 2 CPU cores
 ## Minimum memory for production is 8GB and 4 CPU cores
-## ref: http://docs.datastax.com/en/archived/cassandra/2.0/cassandra/architecture/architecturePlanningHardware_c.html
 resources:
   requests:
-    memory: 4Gi
+    memory: 14Gi
     cpu: 2
   limits:
-    memory: 4Gi
+    memory: 14Gi
     cpu: 2
 
 ## Configure extra options for liveness and readiness probes
@@ -89,6 +103,21 @@ readinessProbe:
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
+
+terminationGracePeriodSeconds: 30
+
+# ingress:
+#   enabled: false
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   path: /
+#   hosts:
+#     - chart-example.local
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
 
 config:
   cluster_name: Dgraph
@@ -114,11 +143,13 @@ config:
     # cloud.google.com/gke-nodepool: pool-db
 nodeSelector: {}
 
+tolerations: []
+
 ## Additional pod labels
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-podManagementPolicy: OrderedReady
+podManagementPolicy: Parallel #OrderedReady
 updateStrategy:
   type: OnDelete
 
