@@ -14,7 +14,7 @@ spec:
   - port: {{ .Values.config.DgraphZero_port }}
     targetPort: {{ .Values.config.DgraphZero_port }}
     name: zero-grpc
-    protocol: GRPC
+    protocol: TCP
   - port: {{ .Values.config.DgraphZero_port_http }}
     targetPort: {{ .Values.config.DgraphZero_port_http }}
     name: zero-http
@@ -26,7 +26,7 @@ spec:
   - port: {{ .Values.config.DgraphAlpha_port }}
     targetPort: {{ .Values.config.DgraphAlpha_port }}
     name: alpha-grpc
-    protocol: GRPC
+    protocol: TCP
   - port: {{ .Values.config.DgraphRatel_port }}
     targetPort: {{ .Values.config.DgraphRatel_port }}
     name: ratel-http
