@@ -10,7 +10,6 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 spec:
   type: ClusterIP
-  clusterIP: {{ .Values.service.clusterIP.ip | default "" }}
   ports:
   - port: {{ .Values.config.DgraphZero_port }}
     targetPort: {{ .Values.config.DgraphZero_port }}
