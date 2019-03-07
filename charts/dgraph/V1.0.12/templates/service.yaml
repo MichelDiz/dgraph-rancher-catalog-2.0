@@ -31,9 +31,6 @@ spec:
     targetPort: {{ .Values.config.DgraphRatel_port }}
     name: ratel-http
     protocol: TCP
-    {{- if .Values.service.nodePort }}
-    nodePort:  {{ .Values.service.nodePort }}
-    {{- end }}
   selector:
     app: {{ template "Dgraph.fullname" . }}
 {{- end }}
