@@ -4,8 +4,8 @@
 ## Dgraph image version
 ## ref: https://hub.docker.com/r/dgraph/dgraph/
 image:
-  repository: dgraph/dgraph
-  tag: "V1.0.12"
+  repository: dgraph-io/dgraph
+  tag: "latest"
   pullPolicy: IfNotPresent
   ## Specify ImagePullSecrets for Pods
   ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
@@ -51,14 +51,15 @@ Ratel:
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
-persistence:
-  enabled: true
-  storageClass: default
-  ## The location within the Dgraph container
-  ## store its posting list and wall logs.
-  ##
-  mountPath: "/dgraph"
-  bindHostEnabled: false
+# persistence:
+#   enabled: true
+#   storageClass: default
+#   ## The location within the Dgraph container
+#   ## store its posting list and wall logs.
+#   ##
+#   mountPath: "/dgraph"
+#   bindHostEnabled: false
+#   accessMode: ReadWriteOnce
 
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer or ClusterIP
@@ -75,7 +76,7 @@ persistence:
 ## Enable client source IP preservation
 ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
 ##
-# serviceExternalTrafficPolicy: Local
+ serviceExternalTrafficPolicy: Cluster
 
 ## Allow health checks to be pointed at the https port
 healthcheckHttps: false
@@ -95,7 +96,7 @@ resources:
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
 livenessProbe:
-  initialDelaySeconds: 30
+  initialDelaySeconds: 120
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
