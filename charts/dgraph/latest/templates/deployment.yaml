@@ -52,9 +52,11 @@ spec:
           name: zero-grpc
         - containerPort: {{ .Values.config.DgraphZero_port_http }}
           name: zero-http
+{{- if .Values.persistence.enabled }}
         volumeMounts:
         - name: datadir
           mountPath: /dgraph
+{{- end }}
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
